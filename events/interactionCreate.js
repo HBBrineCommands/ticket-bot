@@ -31,22 +31,22 @@ module.exports = {
         type: 'text',
       }).then(async c => {
         interaction.reply({
-          content: `Ticket créé! <#${c.id}>`,
+          content: `ticket created! <#${c.id}>`,
           ephemeral: true
         });
 
         const embed = new client.discord.MessageEmbed()
           .setColor('6d6ee8')
-          .setAuthor('Ticket', 'https://i.imgur.com/oO5ZSRK.png')
-          .setDescription('Séléctionnez la catégorie de votre ticket')
-          .setFooter('ExoHost.fr', 'https://i.imgur.com/oO5ZSRK.png')
+          .setAuthor('Ticket', 'https://i.imgur.com/ktf891o.png')
+          .setDescription('Select the category of your ticket)
+          .setFooter('ExoHost.fr', 'https://i.imgur.com/ktf891o.png')
           .setTimestamp();
 
         const row = new client.discord.MessageActionRow()
           .addComponents(
             new client.discord.MessageSelectMenu()
             .setCustomId('category')
-            .setPlaceholder('Séléctionnez la catégorie du ticket')
+            .setPlaceholder('Select the ticket category')
             .addOptions([{
                 label: 'Transaction',
                 value: 'transaction',
@@ -82,16 +82,16 @@ module.exports = {
               msg.delete().then(async () => {
                 const embed = new client.discord.MessageEmbed()
                   .setColor('6d6ee8')
-                  .setAuthor('Ticket', 'https://i.imgur.com/oO5ZSRK.png')
+                  .setAuthor('Ticket', 'https://i.imgur.com/ktf891o.png')
                   .setDescription(`<@!${interaction.user.id}> A créé un ticket ${i.values[0]}`)
-                  .setFooter('ExoHost.fr', 'https://i.imgur.com/oO5ZSRK.png')
+                  .setFooter('Muffin Community', 'https://i.imgur.com/ktf891o.png')
                   .setTimestamp();
 
                 const row = new client.discord.MessageActionRow()
                   .addComponents(
                     new client.discord.MessageButton()
-                    .setCustomId('close-ticket')
-                    .setLabel('Fermer le ticket')
+                    .setCustomId('close-ticket') 
+                    'close ticket')
                     .setEmoji('899745362137477181')
                     .setStyle('DANGER'),
                   );
@@ -147,16 +147,16 @@ module.exports = {
         .addComponents(
           new client.discord.MessageButton()
           .setCustomId('confirm-close')
-          .setLabel('Fermer le ticket')
+          .setLabel('Close ticket')
           .setStyle('DANGER'),
           new client.discord.MessageButton()
           .setCustomId('no')
-          .setLabel('Annuler la fermeture')
+          .setLabel('cancel closing')
           .setStyle('SECONDARY'),
         );
 
       const verif = await interaction.reply({
-        content: 'Êtes vous sûr de vouloir fermer le ticket ?',
+        content: 'Are you sure you want to close the ticket?',
         components: [row]
       });
 
@@ -192,16 +192,16 @@ module.exports = {
             .then(async () => {
               const embed = new client.discord.MessageEmbed()
                 .setColor('6d6ee8')
-                .setAuthor('Ticket', 'https://i.imgur.com/oO5ZSRK.png')
-                .setDescription('```Contrôle des tickets```')
-                .setFooter('ExoHost.fr', 'https://i.imgur.com/oO5ZSRK.png')
+                .setAuthor('Ticket', 'https://i.imgur.com/ktf891o.png')
+                .setDescription('```Ticket control```')
+                .setFooter('Muffin Community', 'https://i.imgur.com/ktf891o.png')
                 .setTimestamp();
 
               const row = new client.discord.MessageActionRow()
                 .addComponents(
                   new client.discord.MessageButton()
                   .setCustomId('delete-ticket')
-                  .setLabel('Supprimer le ticket')
+                  .setLabel('Delete ticket')
                   .setEmoji('🗑️')
                   .setStyle('DANGER'),
                 );
@@ -216,7 +216,8 @@ module.exports = {
         };
         if (i.customId == 'no') {
           interaction.editReply({
-            content: 'Fermeture du ticket annulé !',
+            content: 'Closing the canceled ticket!
+            ',
             components: []
           });
           collector.stop();
@@ -226,7 +227,7 @@ module.exports = {
       collector.on('end', (i) => {
         if (i.size < 1) {
           interaction.editReply({
-            content: 'Fermeture du ticket annulé !',
+            content: 'Closing the canceled ticket!',
             components: []
           });
         };
@@ -238,7 +239,7 @@ module.exports = {
       const chan = guild.channels.cache.get(interaction.channelId);
 
       interaction.reply({
-        content: 'Sauvegarde des messages...'
+        content: 'Saving messages...'
       });
 
       chan.messages.fetch().then(async (messages) => {
@@ -252,14 +253,14 @@ module.exports = {
           }, {})
           .then(function (urlToPaste) {
             const embed = new client.discord.MessageEmbed()
-              .setAuthor('Logs Ticket', 'https://i.imgur.com/oO5ZSRK.png')
-              .setDescription(`📰 Logs du ticket \`${chan.id}\` créé par <@!${chan.topic}> et supprimé par <@!${interaction.user.id}>\n\nLogs: [**Cliquez ici pour voir les logs**](${urlToPaste})`)
+              .setAuthor('Logs Ticket', 'https://i.imgur.com/ktf891o.png')
+              .setDescription(`📰 Logs of ticket \`${chan.id}\` created by <@!${chan.topic}> and deleted by <@!${interaction.user.id}>\n\nLogs: [**Click here to see the logs**](${urlToPaste})`)
               .setColor('2f3136')
               .setTimestamp();
 
             const embed2 = new client.discord.MessageEmbed()
-              .setAuthor('Logs Ticket', 'https://i.imgur.com/oO5ZSRK.png')
-              .setDescription(`📰 Logs de votre ticket \`${chan.id}\`: [**Cliquez ici pour voir les logs**](${urlToPaste})`)
+              .setAuthor('Logs Ticket', 'https://i.imgur.com/ktf891o.png')
+              .setDescription(`📰 Logs of your ticket \`${chan.id}\`: [**Click here to see the logs**](${urlToPaste})`)
               .setColor('2f3136')
               .setTimestamp();
 
@@ -269,7 +270,7 @@ module.exports = {
             client.users.cache.get(chan.topic).send({
               embeds: [embed2]
             }).catch(() => {console.log('I can\'t dm him :(')});
-            chan.send('Suppression du channel...');
+            chan.send('Deleting the channel...');
 
             setTimeout(() => {
               chan.delete();
